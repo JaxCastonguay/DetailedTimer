@@ -30,7 +30,7 @@ public class WorkoutListAdapter extends ArrayAdapter<WorkOut> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String name = getItem(position).getName();
         String time = getItem(position).getTime();
-        WorkOut workOut = new WorkOut(name, time);
+        WorkOut workOut = new WorkOut(name, time, -1);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
