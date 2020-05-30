@@ -3,6 +3,7 @@ package io.github.jaccastonguay.detailedtimer;
 public class WorkOut {
     private String name;
     private String time;
+    private int rowid;
 
     public WorkOut(String name, String time) {
         this.name = name;
@@ -23,5 +24,9 @@ public class WorkOut {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getRowId() {
+        return name;
     }
 }
