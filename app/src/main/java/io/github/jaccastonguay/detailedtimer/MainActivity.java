@@ -16,6 +16,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    ArrayList<WorkOut> workOutList = new ArrayList<>();
+    ArrayList<Exercise> exerciseList = new ArrayList<>();
 
 
     @Override
@@ -26,9 +28,24 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Choose a workout");
 
         ListView workoutListView = findViewById(R.id.ExerciseListView);
-        final ArrayList<WorkOut> workOutList = new ArrayList<>();
-        final ArrayList<Exercise> exerciseList = new ArrayList<>();
+        workOutList = new ArrayList<>();
+        exerciseList = new ArrayList<>();
+        GetWorkoutsAndExercises();
+        WorkoutListAdapter adapter = new WorkoutListAdapter(this, R.layout.excercise_view_layout, workOutList);
+        workoutListView.setAdapter(adapter);
 
+        workoutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), ChosenWorkoutActivity.class);
+                intent.putExtra("workout", workOutList.get(i).getName());
+                intent.putExtra("workout1", exerciseList);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void GetWorkoutsAndExercises() {
         //Workouts and Exercises
         //Open DB
         SQLiteDatabase sqLiteDatabase = this.openOrCreateDatabase("WorkoutDB", MODE_PRIVATE, null);
@@ -75,19 +92,6 @@ public class MainActivity extends AppCompatActivity {
         //Practice safe DBing
         c.close();
         sqLiteDatabase.close();
-
-        WorkoutListAdapter adapter = new WorkoutListAdapter(this, R.layout.excercise_view_layout, workOutList);
-        workoutListView.setAdapter(adapter);
-
-        workoutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), ChosenWorkoutActivity.class);
-                intent.putExtra("workout", workOutList.get(i).getName());
-
-                startActivity(intent);
-            }
-        });
     }
 
     private String ConvertToMinuteFormat(int seconds){

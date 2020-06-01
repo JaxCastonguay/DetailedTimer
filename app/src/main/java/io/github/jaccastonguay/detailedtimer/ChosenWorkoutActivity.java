@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChosenWorkoutActivity extends AppCompatActivity {
 
@@ -19,18 +21,17 @@ public class ChosenWorkoutActivity extends AppCompatActivity {
         setTitle(intent.getStringExtra("workout"));
 
         ListView workoutListView = findViewById(R.id.ChosenExerciseListView);
-        ArrayList<WorkOut> workOutList = new ArrayList<>();
-//        workOutList.add(new WorkOut("leg circles", "1:00"));
-//        workOutList.add(new WorkOut("opposite leg circles", "1:00"));
-//        workOutList.add(new WorkOut("drunken Mountain Climbers", "37:30"));
-//        workOutList.add(new WorkOut("rest", "0:30"));
-//        workOutList.add(new WorkOut("Planks", "1:00"));
-//        workOutList.add(new WorkOut("scissors", "1:00"));
-//        workOutList.add(new WorkOut("starfish crunch", "0:30"));
-//        workOutList.add(new WorkOut("rest", "0:30"));
-//        workOutList.add(new WorkOut("Russian V tuck", ":30"));
+        ArrayList<Exercise> exerciseArrayList = new ArrayList<>();
 
-        WorkoutListAdapter adapter = new WorkoutListAdapter(this, R.layout.excercise_view_layout, workOutList);
+        List<Exercise> exercises = (List<Exercise>) intent.getSerializableExtra("workout1");
+        for(Exercise exercise: exercises){
+            Log.i("exercise passed", exercise.getName());
+            Log.i(exercise.getName(), Integer.toString(exercise.getSeconds()));
+            //Wrapping this poorly for now.
+            exerciseArrayList.add(exercise);
+        }
+
+        ExerciseListAdapter adapter = new ExerciseListAdapter(this, R.layout.excercise_view_layout, exerciseArrayList);
         workoutListView.setAdapter(adapter);
     }
 }

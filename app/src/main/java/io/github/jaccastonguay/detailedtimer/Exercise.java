@@ -1,6 +1,8 @@
 package io.github.jaccastonguay.detailedtimer;
 
-public class Exercise {
+import java.io.Serializable;
+
+public class Exercise implements Serializable {
     private String name;
     private int seconds;
     private int workoutid;
